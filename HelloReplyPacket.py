@@ -1,3 +1,4 @@
+#!/usr/bin/python 2.7
 import socket, sys
 from struct import *
 import netifaces as ni
@@ -25,9 +26,10 @@ from netifaces import *
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 '''
-def toBytes(x):
-    return (int(x,16))
+#def toBytes(x):
+#    return (int(x,16))
 
+# This function is called from listenSocket()
 def helloReplyPacket(interface,d_mac,dstip,timestamp):
     if interface not in ni.interfaces():
         return None
@@ -73,11 +75,9 @@ def helloReplyPacket(interface,d_mac,dstip,timestamp):
 def main():
 
     interface = sys.argv[1]
-    d_mac = 'ff:ff:ff:ff:ff:ff'
-    ip_dst = '224.0.0.4'
     s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW)
     s.bind((interface,0))
-    s.send(helloReplyPacket(interface,d_mac,ip_dst))
+    s.send(helloReplyPacket(interface,d_mac,ip_dst,timestamp))
 
 if __name__ == "__main__":
     main()
